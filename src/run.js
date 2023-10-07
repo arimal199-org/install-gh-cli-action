@@ -6,7 +6,8 @@ async function run() {
   try {
     let version = core.getInput('gh-cli-version');
     if (version) {
-      await getGhCli(version);
+      const toolPath = await getGhCli(version);
+      core.setOutput('gh-cli-path', toolPath);
     }
   } catch (error) {
     core.setFailed(error.message);
