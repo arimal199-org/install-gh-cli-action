@@ -29774,7 +29774,8 @@ async function run() {
   try {
     let version = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('gh-cli-version');
     if (version) {
-      await getGhCli(version);
+      const toolPath = await getGhCli(version);
+      _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('gh-cli-path', toolPath);
     }
   } catch (error) {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
@@ -29793,8 +29794,13 @@ async function getGhCli(version) {
 }
 
 async function downloadGhCli(version) {
-  const toolDirectoryName = `gh_${version}_linux_amd64`;
-  const downloadUrl = `https://github.com/cli/cli/releases/download/v${version}/gh_${version}_linux_amd64.tar.gz`;
+  let arch = 'amd64'; // Default to amd64 architecture
+  if (process.arch === 'arm64') {
+    arch = 'arm64'; // Change architecture to arm64 if running on arm64
+  }
+
+  const toolDirectoryName = `gh_${version}_linux_${arch}`;
+  const downloadUrl = `https://github.com/cli/cli/releases/download/v${version}/gh_${version}_linux_${arch}.tar.gz`;
   console.log(`downloading ${downloadUrl}`);
 
   try {
