@@ -8,5 +8,5 @@ Selfhosted runners do not come with the GH CLI out of the box. This action is an
 - name: Install GH CLI
   uses: arimal199-org/install-gh-cli-action
   with:
-    gh-cli-version: 2.36.0 # optional, see action.yml for current default
+    gh-cli-version: 2.44.1 # optional, see action.yml for current default
 ```
